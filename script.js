@@ -298,20 +298,31 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
   
-    function checkIfBlocked(course) {
-      const prereqs = (course.dataset.prerequisitos || "").split(",").filter(Boolean);
-      const coreqs = (course.dataset.correquisitos || "").split(",").filter(Boolean);
-      
-      const hasMissingPrereqs = prereqs.length > 0 && 
-        !prereqs.every(prereq => state.completedCourses.has(prereq));
-      
-      const hasBlockedCoreqs = coreqs.some(coreq => {
-        const coreqEl = document.querySelector(`.disciplina[data-nome="${coreq}"]`);
-        return coreqEl && coreqEl.classList.contains("bloqueada");
-      });
-      
-      return hasMissingPrereqs || hasBlockedCoreqs;
-    }
+ function checkIfBlocked(course) {
+  const nome = course.dataset.nome;
+  const prereqs = (course.dataset.prerequisitos || "").split(",").filter(Boolean);
+  const coreqs = (course.dataset.correquisitos || "").split(",").filter(Boolean);
+
+  // Regras por carga horária
+  if (nome === "Avaliação de Impactos Ambientais" && state.completedHours < 2500) {
+    return true;
+  }
+  if (nome === "Estágio Obrigatório" && state.completedHours < 2600) {
+    return true;
+  }
+
+  // Regras de pré e correquisitos
+  const hasMissingPrereqs = prereqs.length > 0 &&
+    !prereqs.every(prereq => state.completedCourses.has(prereq));
+
+  const hasBlockedCoreqs = coreqs.some(coreq => {
+    const coreqEl = document.querySelector(`.disciplina[data-nome="${coreq}"]`);
+    return coreqEl && coreqEl.classList.contains("bloqueada");
+  });
+
+  return hasMissingPrereqs || hasBlockedCoreqs;
+}
+
   
     function updateHoursCounter() {
       state.completedHours = Array.from(state.completedCourses)
