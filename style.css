@@ -307,12 +307,14 @@ main#grade {
 
 /* Footer */
 footer {
-  background: var(--cinza-800);
-  padding: var(--espaco-md);
   text-align: center;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
+  color: var(--cinza-400);
+  padding: 1rem;
+  background-color: var(--cinza-800);
   margin-top: auto;
 }
+
 
 #btn-tema {
   background: var(--cinza-700);
