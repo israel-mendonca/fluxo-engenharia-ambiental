@@ -211,14 +211,12 @@ document.addEventListener("DOMContentLoaded", () => {
   function initEventListeners() {
     // Evento único para clique e touch
     document.addEventListener("click", handleCourseClick);
-    document.addEventListener("touchend", handleCourseClick, { passive: true });
   }
 
   function handleCourseClick(e) {
     const disciplina = e.target.closest(".disciplina");
     if (!disciplina || disciplina.classList.contains("bloqueada")) return;
     
-    if (e.type === 'touchend') e.preventDefault();
     toggleCourseCompletion(disciplina);
     updateAll();
   }
