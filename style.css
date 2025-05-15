@@ -1,0 +1,647 @@
+:root {
+  /* Cores principais */
+  --verde-primario: #2ecc71;
+  --verde-secundario: #27ae60;
+  --verde-titulo: #17b459;
+  --verde-claro: #5cdb95;
+  --vermelho: #ff6b6b;
+  --amarelo: #ffd166;
+  
+  /* Escala de cinzas */
+  --cinza-100: #f8f9fa;
+  --cinza-200: #e9ecef;
+  --cinza-300: #dee2e6;
+  --cinza-400: #ced4da;
+  --cinza-500: #a0aec0;
+  --cinza-600: #6c757d;
+  --cinza-700: #4a5568;
+  --cinza-800: #2d3748;
+  --cinza-900: #1a202c;
+  
+  /* Cores semânticas */
+  --bg: var(--cinza-900);
+  --texto: var(--cinza-100);
+  --destaque: var(--verde-primario);
+  
+  /* Efeitos */
+  --sombra: 0 4px 6px rgba(0, 0, 0, 0.3);
+  --sombra-destaque: 0 4px 15px rgba(46, 204, 113, 0.3);
+  
+  /* Espaçamentos */
+  --espaco-xs: 0.25rem;
+  --espaco-sm: 0.5rem;
+  --espaco-md: 1rem;
+  --espaco-lg: 1.5rem;
+  --espaco-xl: 2rem;
+  
+  /* Bordas */
+  --raio-sm: 4px;
+  --raio-md: 8px;
+  --raio-lg: 12px;
+  --raio-pill: 999px;
+  
+  /* Tipografia */
+  --fonte-base: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --fonte-titulo: 'Segoe UI', Arial, sans-serif;
+  --peso-normal: 400;
+  --peso-medium: 500;
+  --peso-bold: 700;
+}
+
+/* Reset e Base */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--fonte-base);
+  background-color: var(--bg);
+  color: var(--texto);
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Acessibilidade - Foco */
+:focus {
+  outline: 3px solid var(--verde-claro);
+  outline-offset: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--verde-titulo);
+  color: white;
+  padding: var(--espaco-sm);
+  z-index: 100;
+  transition: top 0.3s;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Header */
+header {
+  background: linear-gradient(135deg, var(--verde-titulo), var(--verde-secundario));
+  color: var(--cinza-900);
+  padding: var(--espaco-lg);
+  text-align: center;
+  box-shadow: var(--sombra);
+  position: relative;
+}
+
+header h1 {
+  margin: 0;
+  font-size: clamp(1.25rem, 4vw, 1.8rem);
+  font-family: var(--fonte-titulo);
+  font-weight: var(--peso-bold);
+  line-height: 1.2;
+}
+
+.period-selector-mobile {
+  display: none;
+  margin-top: var(--espaco-md);
+}
+
+/* Grade Principal */
+main#grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: var(--espaco-md);
+  padding: 0 var(--espaco-lg) var(--espaco-xl);
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+  flex: 1;
+}
+
+/* Colunas */
+.column {
+  background: var(--cinza-800);
+  padding: var(--espaco-md);
+  border-radius: var(--raio-lg);
+  box-shadow: var(--sombra);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.column:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--sombra-destaque);
+}
+
+.column h2 {
+  font-size: 1rem;
+  text-align: center;
+  margin: 0 0 var(--espaco-md) 0;
+  padding-bottom: var(--espaco-sm);
+  color: var(--verde-titulo);
+  border-bottom: 2px solid var(--verde-titulo);
+  font-weight: var(--peso-medium);
+}
+
+/* Disciplinas */
+.disciplina {
+  padding: var(--espaco-md);
+  margin: var(--espaco-sm) 0;
+  border-radius: var(--raio-md);
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+  border-left: 4px solid transparent;
+}
+
+.disciplina::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background-color: currentColor;
+  opacity: 0.3;
+}
+
+/* Estados das disciplinas */
+.disciplina.liberada {
+  background-color: var(--cinza-700);
+  color: var(--cinza-400);
+  border-left-color: var(--cinza-500);
+}
+
+.disciplina.feita {
+  background-color: rgba(92, 219, 149, 0.15);
+  color: var(--verde-claro);
+  border-left-color: var(--verde-claro);
+}
+
+.disciplina.bloqueada {
+  background-color: rgba(255, 107, 107, 0.1);
+  color: var(--vermelho);
+  border-left-color: var(--vermelho);
+  cursor: not-allowed;
+}
+
+/* Texto e requisitos */
+.nome-disciplina {
+  font-weight: var(--peso-medium);
+  display: block;
+  margin-bottom: var(--espaco-xs);
+}
+
+.requisitos {
+  font-size: 0.75rem;
+  opacity: 0.9;
+  line-height: 1.4;
+}
+
+.disciplina.feita .requisitos,
+.disciplina.liberada .requisitos {
+  color: inherit;
+}
+
+.disciplina.bloqueada .requisitos {
+  color: var(--vermelho);
+}
+
+/* Contador de Horas - Estilo Base */
+#contador-horas {
+  position: fixed;
+  right: 15px;
+  bottom: 15px;
+  background: var(--cinza-800);
+  color: var(--branco);
+  padding: 10px 15px;
+  border-radius: 20px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+  z-index: 1000;
+  max-width: 200px;
+  font-size: 0.85rem;
+  border: 1px solid var(--verde-titulo);
+}
+
+/* Versão Mobile Compacta */
+@media (max-width: 768px) {
+  #contador-horas {
+    right: 10px;
+    bottom: 10px;
+    padding: 8px 12px;
+    border-radius: 18px;
+    max-width: 160px;
+    font-size: 0.75rem;
+  }
+
+  #contador-horas .requirements {
+    display: none; /* Esconde os detalhes no mobile */
+  }
+
+  #contador-horas .total-hours {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+/* Mostrar detalhes ao tocar (opcional) */
+#contador-horas:hover .requirements {
+  display: block !important;
+} 
+#horas-total {
+  font-weight: var(--peso-bold);
+  color: var(--verde-claro);
+}
+
+#toggle-contador {
+  background: none;
+  border: none;
+  color: var(--texto);
+  position: absolute;
+  right: 0;
+  top: 0;
+  cursor: pointer;
+  padding: 0 var(--espaco-sm);
+}
+
+#toggle-contador .arrow {
+  transition: transform 0.3s ease;
+}
+
+#toggle-contador[aria-expanded="false"] .arrow {
+  transform: rotate(-90deg);
+}
+
+#detalhes-horas {
+  margin-top: var(--espaco-sm);
+  padding-top: var(--espaco-sm);
+  border-top: 1px solid var(--cinza-700);
+  transition: all 0.3s ease;
+}
+
+#detalhes-horas[aria-hidden="true"] {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+}
+
+#detalhes-horas div {
+  margin: var(--espaco-xs) 0;
+  font-size: 0.85rem;
+}
+
+/* Footer */
+footer {
+  background: var(--cinza-800);
+  padding: var(--espaco-md);
+  text-align: center;
+  font-size: 0.85rem;
+  margin-top: auto;
+}
+
+#btn-tema {
+  background: var(--cinza-700);
+  color: var(--texto);
+  border: none;
+  padding: var(--espaco-sm) var(--espaco-md);
+  border-radius: var(--raio-pill);
+  cursor: pointer;
+  font-size: 0.85rem;
+  margin-top: var(--espaco-sm);
+  transition: background 0.2s ease;
+}
+
+#btn-tema:hover {
+  background: var(--cinza-600);
+}
+
+#btn-tema[aria-pressed="true"] {
+  background: var(--verde-titulo);
+  color: var(--cinza-900);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  main#grade {
+    grid-template-columns: 1fr;
+    padding: 0 var(--espaco-md) var(--espaco-lg);
+    gap: var(--espaco-sm);
+  }
+  
+  .period-selector-mobile {
+    display: block;
+  }
+  
+  #mobile-period-selector {
+    width: 100%;
+    padding: var(--espaco-sm);
+    border-radius: var(--raio-sm);
+    border: none;
+    background: var(--cinza-900);
+    color: var(--texto);
+  }
+  
+  
+  
+  
+  
+  #contador-horas {
+    width: calc(100% - var(--espaco-md) * 2);
+    right: var(--espaco-md);
+    bottom: var(--espaco-md);
+  }
+}
+
+@media (max-width: 480px) {
+  header {
+    padding: var(--espaco-md);
+  }
+  
+  .disciplina {
+    padding: var(--espaco-sm);
+    font-size: 0.8rem;
+  }
+  
+  .nome-disciplina {
+    font-size: 0.9rem;
+  }
+  
+  .requisitos {
+    font-size: 0.7rem;
+  }
+}
+
+/* Animações */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.column {
+  animation: fadeIn 0.3s ease forwards;
+}
+
+/* Estado inicial para JS */
+.no-js-warning {
+  padding: var(--espaco-md);
+  background: var(--vermelho);
+  color: white;
+  text-align: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}:root {
+  /* Cores principais */
+  --verde-primario: #2ecc71;
+  --verde-secundario: #27ae60;
+  --verde-titulo: #1e8449;
+  --verde-claro: #5cdb95;
+  --vermelho: #ff6b6b;
+  
+  /* Escala de cinzas */
+  --cinza-100: #f8f9fa;
+  --cinza-200: #e9ecef;
+  --cinza-300: #dee2e6;
+  --cinza-400: #ced4da;
+  --cinza-500: #a0aec0;
+  --cinza-600: #6c757d;
+  --cinza-700: #4a5568;
+  --cinza-800: #2d3748;
+  --cinza-900: #1a202c;
+  
+  /* Cores semânticas */
+  --cor-fundo: var(--cinza-900);
+  --cor-texto: var(--cinza-100);
+  
+  /* Espaçamentos */
+  --espaco-pequeno: 0.5rem;
+  --espaco-medio: 1rem;
+  --espaco-grande: 1.5rem;
+  
+  /* Bordas */
+  --borda-arredondada: 8px;
+}
+
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto);
+  line-height: 1.6;
+  padding-bottom: 60px; /* Espaço para o contador */
+}
+
+/* Header */
+header {
+  background: linear-gradient(135deg, var(--verde-titulo), var(--verde-secundario));
+  color: var(--cinza-900);
+  padding: var(--espaco-grande);
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: var(--espaco-grande);
+}
+
+header h1 {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+/* Grade principal */
+main#grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: var(--espaco-medio);
+  padding: 0 var(--espaco-grande) var(--espaco-grande);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Colunas */
+.column {
+  background: var(--cinza-800);
+  padding: var(--espaco-medio);
+  border-radius: var(--borda-arredondada);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.column h2 {
+  font-size: 1rem;
+  color: var(--verde-titulo);
+  text-align: center;
+  margin-bottom: var(--espaco-pequeno);
+  padding-bottom: var(--espaco-pequeno);
+  border-bottom: 2px solid var(--verde-titulo);
+}
+
+/* Disciplinas */
+.disciplina {
+  padding: var(--espaco-pequeno);
+  margin: 0.5rem 0;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  position: relative;
+  overflow: hidden;
+  border-left: 4px solid transparent;
+}
+
+.disciplina::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background-color: currentColor;
+  opacity: 0.3;
+}
+
+/* Estados das disciplinas */
+.disciplina.liberada {
+  background-color: var(--cinza-700);
+  color: var(--cinza-400);
+  border-left-color: var(--cinza-500);
+}
+
+.disciplina.feita {
+  background-color: rgba(92, 219, 149, 0.15);
+  color: var(--verde-claro);
+  border-left-color: var(--verde-claro);
+}
+
+.disciplina.bloqueada {
+  background-color: rgba(255, 107, 107, 0.1);
+  color: var(--vermelho);
+  border-left-color: var(--vermelho);
+  cursor: not-allowed;
+}
+
+/* Texto e requisitos */
+.nome-disciplina {
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.requisitos {
+  font-size: 0.75rem;
+  opacity: 0.8;
+  line-height: 1.4;
+}
+
+/* Contador de horas */
+#contador-horas {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  background: var(--cinza-800);
+  color: var(--cor-texto);
+  padding: var(--espaco-pequeno);
+  border-radius: var(--borda-arredondada);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  z-index: 100;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  main#grade {
+    grid-template-columns: 1fr;
+    padding: 0 var(--espaco-pequeno) var(--espaco-grande);
+  }
+  
+  header h1 {
+    font-size: 1.25rem;
+  }
+  
+  .disciplina {
+    padding: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --espaco-grande: 1rem;
+    --espaco-medio: 0.75rem;
+    --espaco-pequeno: 0.5rem;
+  }
+  
+  #contador-horas {
+    width: calc(100% - 2rem);
+    right: 1rem;
+  }
+}
+main#grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.2rem;
+  padding: 0 1.5rem 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.column {
+  background: var(--cinza-800);
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: var(--sombra);
+}
+
+/* ===== VERSÃO MOBILE ===== */
+@media (max-width: 768px) {
+  main#grade {
+    display: block !important; /* Força layout vertical */
+    grid-template-columns: none !important;
+  }
+
+  /* Garante que todas as colunas são mostradas */
+  .column {
+    display: block !important;
+    width: 100% !important;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Remove espaçamento interno excessivo */
+  .disciplina {
+    padding: 0.8rem;
+  }
+}
+
+/* Cabeçalhos de período destacados */
+.column h2 {
+  background: var(--verde-titulo);
+  color: var(--cinza-900);
+  padding: 0.5rem;
+  text-align: center;
+  border-radius: 6px;
+  margin-bottom: 0.8rem;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+@media (max-width: 768px) {
+  .column {
+    display: none;
+  }
+}
